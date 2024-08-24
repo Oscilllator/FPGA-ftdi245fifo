@@ -67,13 +67,15 @@ def open_ft_usb_device(device_type, device_name):
         for i in range(16):
             
             try:
-                usb = ftd2xx.open(i)
+                # usb = ftd2xx.open(i)
+                usb = ftd2xx.openEx(b'dac', ftd2xx.defines.OPEN_BY_DESCRIPTION)
             except:
                 continue
             
             if usb.description != b_device_name:
-                usb.close()
-                continue
+                print(f"device description: {usb.description} did not match {b_device_name} but I don't care")
+                # usb.close()
+                # continue
             
             usb.setBitMode(0xff, 0x40)
             
